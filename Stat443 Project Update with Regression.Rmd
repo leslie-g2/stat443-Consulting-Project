@@ -1,0 +1,134 @@
+---
+title: 'Stat 443: Consulting Project'
+output: pdf_document
+date: "2025-10-03"
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+
+## REUPLOAD THE MARKDOWN (ON CANVAS) EVERYTIME YOU MAKE CHANGES PLS 
+## R Markdown
+
+This is an R Markdown document. Markdown is a simple formatting syntax for authoring HTML, PDF, and MS Word documents. For more details on using R Markdown see <http://rmarkdown.rstudio.com>.
+
+When you click the **Knit** button a document will be generated that includes both content as well as the output of any embedded R code chunks within the document. You can embed an R code chunk like this:
+
+```{r}
+df = read.csv("TurbineGroup2.csv")
+high_energy <- df[df$TEY >= 160,]
+low_energy <- df[(df$TEY >= 130 & df$TEY <= 136),]
+all_predictors_model <- lm(NOX ~ . - CO -AP -AT -AH -TEY, data = df)
+summary(all_predictors_model)
+high_energy_model <- lm(NOX ~ . - CO -AP -AT -AH -TEY, data = high_energy)
+summary(high_energy_model)
+low_energy_model <- lm(NOX ~ . - CO -AP -AT -AH -TEY, data = low_energy)
+summary(low_energy_model)
+high_environmental_model <- lm(NOX ~ AP + AT + AH, data = high_energy)
+summary(high_environmental_model)
+low_evironmental_model <- lm(NOX ~ AP + AT + AH, data = low_energy)
+summary(low_evironmental_model)
+```
+
+## Including Plots
+
+You can also embed plots, for example:
+
+```{r pressure, echo=FALSE}
+library(ggplot2)
+
+ggplot(high_energy, aes(AFDP, NOX)) +
+  geom_point() +
+  geom_smooth(method = "lm") +
+  labs(x = "AFDP", y = "NOX")
+
+ggplot(high_energy, aes(GTEP, NOX)) +
+  geom_point() +
+  geom_smooth(method = "lm") +
+  labs(x = "GTEP", y = "NOX")
+
+ggplot(high_energy, aes(TIT, NOX)) +
+  geom_point() +
+  geom_smooth(method = "lm") +
+  labs(x = "TIT", y = "NOX")
+
+ggplot(high_energy, aes(TAT, NOX)) +
+  geom_point() +
+  geom_smooth(method = "lm") +
+  labs(x = "TAT", y = "NOX")
+
+ggplot(high_energy, aes(CDP, NOX)) +
+  geom_point() +
+  geom_smooth(method = "lm") +
+  labs(x = "CDP", y = "NOX")
+```
+
+```{r}
+ggplot(high_energy, aes(AT, NOX)) +
+  geom_point() +
+  geom_smooth(method = "lm") +
+  labs(x = "AT", y = "NOX")
+
+ggplot(high_energy, aes(AP, NOX)) +
+  geom_point() +
+  geom_smooth(method = "lm") +
+  labs(x = "AP", y = "NOX")
+
+ggplot(high_energy, aes(AH, NOX)) +
+  geom_point() +
+  geom_smooth(method = "lm") +
+  labs(x = "AH", y = "NOX")
+```
+
+```{r}
+#GOOD
+ggplot(low_energy, aes(GTEP, NOX)) +
+  geom_point() +
+  geom_smooth(method = "lm") +
+  labs(x = "GTEP", y = "NOX")
+
+#GOOD
+ggplot(low_energy, aes(AFDP, NOX)) +
+  geom_point() +
+  geom_smooth(method = "lm") +
+  labs(x = "AFDP", y = "NOX")
+
+#BAD
+ggplot(low_energy, aes(TAT, NOX)) +
+  geom_point() +
+  geom_smooth(method = "lm") +
+  labs(x = "TAT", y = "NOX")
+
+#BAD
+ggplot(low_energy, aes(TIT, NOX)) +
+  geom_point() +
+  geom_smooth(method = "lm") +
+  labs(x = "TIT", y = "NOX")
+
+#GOOD
+ggplot(low_energy, aes(CDP, NOX)) +
+  geom_point() +
+  geom_smooth(method = "lm") +
+  labs(x = "CDP", y = "NOX")
+```
+
+```{r}
+ggplot(low_energy, aes(AT, NOX)) +
+  geom_point() +
+  geom_smooth(method = "lm") +
+  labs(x = "AT", y = "NOX")
+
+ggplot(low_energy, aes(AP, NOX)) +
+  geom_point() +
+  geom_smooth(method = "lm") +
+  labs(x = "AP", y = "NOX")
+
+ggplot(low_energy, aes(AH, NOX)) +
+  geom_point() +
+  geom_smooth(method = "lm") +
+  labs(x = "AH", y = "NOX")
+```
+
+Note that the `echo = FALSE` parameter was added to the code chunk to prevent printing of the R code that generated the plot.
