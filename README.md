@@ -1,108 +1,132 @@
-```markdown
+````markdown
 # Gas Turbine NOx Reduction – STAT 443 Consulting Project
 
 ## Project Goal
-Consulting project for STAT-443 Professional Statistics.  
-We are working with **turbine sensor data from an energy provider in Turkey** to:
-- Analyze **NOx (nitrogen oxides) emissions** and **CO (carbon monoxide)**.  
-- Identify operational variables that drive NOx.  
-- Provide recommendations for reducing NOx emissions while keeping CO under control.  
-- Deliver a final **report + documented code (R/Python)** by December.  
+Consulting project for STAT-443 Professional Statistics.
+We work with turbine sensor data from an energy provider in Turkey to:
+- Analyze NOx (nitrogen oxides) and CO (carbon monoxide).
+- Identify operational variables that drive NOx.
+- Recommend actions to reduce NOx while keeping CO acceptable.
+- Deliver a final report + documented code (R/Python) by December.
 
 ---
 
 ## Requirements / Objectives
-1. **Data Exploration (EDA)**
-   - Check distributions, trends, and outliers for all variables.  
-   - Plot NOx and CO against turbine variables (TIT, CDP, TEY, etc.).  
+1) Data Exploration (EDA)
+- Check distributions, trends, outliers for all variables.
+- Plot NOx and CO against turbine variables (TIT, CDP, TEY, etc.).
 
-2. **Data Cleaning**
-   - Handle missing values or sensor errors.  
-   - Remove outliers (spikes beyond physical turbine ranges).  
+2) Data Cleaning
+- Handle missing values or sensor errors.
+- Remove outliers (spikes beyond physical turbine ranges).
 
-3. **Feature Engineering**
-   - Create load bands from TEY.  
-   - Derive temperature deltas (TIT–TAT, TIT–TK2).  
-   - Add interaction terms (CDP × TIT, AT × AH).  
+3) Feature Engineering
+- Create load bands from TEY.
+- Derive temperature deltas (e.g., TIT–TAT).
+- Add interaction terms (e.g., CDP × TIT, AT × AH).
 
-4. **Modeling**
-   - Build predictive models for NOx (Linear Regression, Random Forest, etc.).  
-   - Compare results and feature importance.  
-   - Test “what-if” scenarios (lower TIT, change load band).  
+4) Modeling
+- Build predictive models for NOx (Linear Regression, Random Forest, etc.).
+- Compare performance and feature importance.
+- Run “what-if” scenarios (lower TIT, shift load band).
 
-5. **Recommendations**
-   - Operational changes to lower NOx.  
-   - Trade-off analysis between NOx and CO.  
-   - Sensitivity to ambient conditions (temperature, humidity).  
+5) Recommendations
+- Operational changes to lower NOx.
+- NOx–CO trade-off analysis.
+- Sensitivity to ambient conditions (temperature, humidity).
 
 ---
 
-## Repository Structure
-```
+## Client + Context (from first meeting)
+- Client: Energy provider in Turkey.
+- Equipment: Gas turbines with emissions and operational sensors.
+- Contact: Engineering Manager. Preferred communication: email.
+- Data: Hourly averages for ~2 years (~14k rows).
+- Normal power range ~130–136 MWh; higher loads up to ~160 MWh.
+- Variables include:
+  - Ambient: AT (temp), AP (pressure), AH (humidity)
+  - Process: AFDP (air filter ΔP), CDP (compressor discharge pressure), GTEP (exhaust pressure)
+  - Temps: TIT (turbine inlet), TAT (turbine exhaust)
+  - Output: TEY (power/energy)
+  - Emissions: CO, NOX (target)
+- Deliverables: Report + documented code (R/Python), guidance for different weather conditions.
+- Deadline: December.
 
-Gas-Turbine-NOX-Reduction/
-│
-├── hee-jae/          # individual work folder
-├── leah/             # individual work folder
-├── leslie/           # individual work folder
-├── sean/             # individual work folder
-├── viraj/            # individual work folder
+---
 
-├── TurbineGroup2.csv # dataset
-└── README.md         # this file
+## EDA Findings (summary)
+- TIT often near upper limit → strong driver of NOx.
+- TAT tightly controlled ~550°C → less variance.
+- TEY shows discrete load bands → segment analysis by load.
+- CDP, GTEP, AFDP show multi-modal behavior → indicates modes/regimes.
+- CO mostly near zero with occasional spikes → typical NOx–CO trade-off.
+- Ambient humidity tends to suppress NOx slightly; temperature shifts baseline.
 
-````
+---
 
-Each member works in their **own folder**. Shared code or reports go in the root consulting notebook (`STAT-443.ipynb`).  
+## Methods Used So Far
+- Histograms, correlation matrix (Pearson), scatter plots (NOX vs TIT, CDP, TEY, CO).
+- Load band segmentation by TEY (e.g., ≤136, 136–160, >160).
+- Baseline models: Linear Regression (scaled), Random Forest for nonlinearity.
+- Early importance: TIT, CDP, TEY rank high for NOx.
+
+---
+
+## Next Steps
+- Feature engineering: ΔT (TIT–TAT), interactions (CDP×TIT), ambient bins.
+- Scenario testing: effect of decreasing TIT by set increments, high-humidity vs low-humidity cases.
+- Multi-metric view: ensure CO stays within limits while reducing NOx.
+- Finalize recommendations and KPI targets (compliance margin, $/ton abated, uptime).
 
 ---
 
 ## Setup
-- Python 3.x  
-- Packages: `pandas`, `numpy`, `matplotlib`, `scikit-learn`  
-- (Optional) R setup if needed for final deliverable.  
+- Python 3.x
+- Packages: pandas, numpy, matplotlib, scikit-learn
+- Optional: R environment if required for deliverable parity.
+- Run notebooks in order; keep individual work inside each person’s folder.
 
-````markdown
-## Git Workflow (Direct to Main)
+---
 
-Since each member works only inside their own folder, you can push directly to `main`.
+## Git Workflow (Direct to main)
+Since each member works only inside their own folder, push directly to `main`.
 
-1. **Check repo status**
-   ```bash
-   git status
+1. Check status
+```bash
+git status
 ````
 
-2. **Stage your changes**
+2. Stage changes
 
-   ```bash
-   git add .
-   git status   # confirm files are staged
-   ```
+```bash
+git add .
+git status
+```
 
-3. **Commit (short message, straight to the point)**
+3. Commit (short message, straight)
 
-   ```bash
-   git commit -m "feat(<name>): add/update analysis"
-   ```
+```bash
+git commit -m "feat(<name>): add/update analysis"
+# examples:
+# feat(hee-jae): add NOx vs TEY plots
+# feat(sean): update regression model
+# chore(viraj): clean CO outliers
+```
 
-   Examples:
+4. Push to main
 
-   * `feat(hee-jae): add NOx vs TEY plots`
-   * `feat(sean): update regression model`
-   * `chore(viraj): clean CO outliers`
-
-4. **Push directly to main**
-
-   ```bash
-   git push origin main
-   ```
+```bash
+git push origin main
+```
 
 ---
 
 ## Notes
 
-* Always keep work **inside your folder**.
-* Do not touch files in other teammates’ folders.
-* Use short commit messages: `feat`, `fix`, or `chore` + your name + action.
+* Keep work inside your folder. Do not edit others’ folders.
+* Use short commit messages: feat, fix, chore + your name + action.
+* If stuck, check README or ask teammates; ChatGPT can assist.
 
+```
+::contentReference[oaicite:0]{index=0}
 ```
