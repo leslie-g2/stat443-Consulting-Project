@@ -1,4 +1,3 @@
-````markdown
 # Gas Turbine NOx Reduction – STAT 443 Consulting Project
 
 ## Project Goal
