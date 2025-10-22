@@ -1,7 +1,3 @@
-Here’s a clean **README.md draft** for your `Gas-Turbine-NOX-Reduction` repo that documents the project, requirements, workflow steps, and a simple Git pipeline for teammates.
-
----
-
 ```markdown
 # Gas Turbine NOx Reduction – STAT 443 Consulting Project
 
