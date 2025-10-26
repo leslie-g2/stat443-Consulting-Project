@@ -20,14 +20,29 @@ When you click the **Knit** button a document will be generated that includes bo
 df = read.csv("TurbineGroup2.csv")
 high_energy <- df[df$TEY >= 160,]
 low_energy <- df[(df$TEY >= 130 & df$TEY <= 136),]
-all_predictors_model <- lm(NOX ~ . - CO -AP -AT -AH -TEY, data = df)
+```
+
+```{r}
+all_predictors_model <- lm(NOX ~ . - CO - AP - AT - AH - TEY, data = df)
 summary(all_predictors_model)
-high_energy_model <- lm(NOX ~ . - CO -AP -AT -AH -TEY, data = high_energy)
+```
+
+```{r}
+high_energy_model <- lm(NOX ~ . - CO - AP - AT - AH - TEY, data = high_energy)
 summary(high_energy_model)
-low_energy_model <- lm(NOX ~ . - CO -AP -AT -AH -TEY, data = low_energy)
+```
+
+```{r}
+low_energy_model <- lm(NOX ~ . - CO - AP - AT - AH - TEY, data = low_energy)
 summary(low_energy_model)
+```
+
+```{r}
 high_environmental_model <- lm(NOX ~ AP + AT + AH, data = high_energy)
 summary(high_environmental_model)
+```
+
+```{r}
 low_evironmental_model <- lm(NOX ~ AP + AT + AH, data = low_energy)
 summary(low_evironmental_model)
 ```
@@ -38,11 +53,13 @@ You can also embed plots, for example:
 
 ```{r pressure, echo=FALSE}
 library(ggplot2)
+library(ggpubr)
 
 ggplot(high_energy, aes(AFDP, NOX)) +
   geom_point() +
   geom_smooth(method = "lm") +
-  labs(x = "AFDP", y = "NOX")
+  labs(x = "AFDP", y = "NOX") +
+  stat_regline_equation(aes(label = ..rr.label..), label.y = 110)
 
 ggplot(high_energy, aes(GTEP, NOX)) +
   geom_point() +
@@ -52,34 +69,40 @@ ggplot(high_energy, aes(GTEP, NOX)) +
 ggplot(high_energy, aes(TIT, NOX)) +
   geom_point() +
   geom_smooth(method = "lm") +
-  labs(x = "TIT", y = "NOX")
+  labs(x = "TIT", y = "NOX") +
+  stat_regline_equation(aes(label = ..rr.label..), label.y = 90)
 
 ggplot(high_energy, aes(TAT, NOX)) +
   geom_point() +
   geom_smooth(method = "lm") +
-  labs(x = "TAT", y = "NOX")
+  labs(x = "TAT", y = "NOX") +
+  stat_regline_equation(aes(label = ..rr.label..), label.y = 90)
 
 ggplot(high_energy, aes(CDP, NOX)) +
   geom_point() +
   geom_smooth(method = "lm") +
-  labs(x = "CDP", y = "NOX")
+  labs(x = "CDP", y = "NOX") +
+  stat_regline_equation(aes(label = ..rr.label..), label.y = 90)
 ```
 
 ```{r}
 ggplot(high_energy, aes(AT, NOX)) +
   geom_point() +
   geom_smooth(method = "lm") +
-  labs(x = "AT", y = "NOX")
+  labs(x = "AT", y = "NOX") +
+  stat_regline_equation(aes(label = ..rr.label..), label.y = 90)
 
 ggplot(high_energy, aes(AP, NOX)) +
   geom_point() +
   geom_smooth(method = "lm") +
-  labs(x = "AP", y = "NOX")
+  labs(x = "AP", y = "NOX") +
+  stat_regline_equation(aes(label = ..rr.label..), label.y = 90)
 
 ggplot(high_energy, aes(AH, NOX)) +
   geom_point() +
   geom_smooth(method = "lm") +
-  labs(x = "AH", y = "NOX")
+  labs(x = "AH", y = "NOX") +
+  stat_regline_equation(aes(label = ..rr.label..), label.y = 90)
 ```
 
 ```{r}
@@ -87,13 +110,15 @@ ggplot(high_energy, aes(AH, NOX)) +
 ggplot(low_energy, aes(GTEP, NOX)) +
   geom_point() +
   geom_smooth(method = "lm") +
-  labs(x = "GTEP", y = "NOX")
+  labs(x = "GTEP", y = "NOX") +
+  stat_regline_equation(aes(label = ..rr.label..), label.x = 27, label.y = 110)
 
 #GOOD
 ggplot(low_energy, aes(AFDP, NOX)) +
   geom_point() +
   geom_smooth(method = "lm") +
-  labs(x = "AFDP", y = "NOX")
+  labs(x = "AFDP", y = "NOX") +
+  stat_regline_equation(aes(label = ..rr.label..), label.x = 5.25, label.y = 105)
 
 #BAD
 ggplot(low_energy, aes(TAT, NOX)) +
@@ -111,24 +136,28 @@ ggplot(low_energy, aes(TIT, NOX)) +
 ggplot(low_energy, aes(CDP, NOX)) +
   geom_point() +
   geom_smooth(method = "lm") +
-  labs(x = "CDP", y = "NOX")
+  labs(x = "CDP", y = "NOX") +
+  stat_regline_equation(aes(label = ..rr.label..), label.x = 12.5, label.y = 105)
 ```
 
 ```{r}
 ggplot(low_energy, aes(AT, NOX)) +
   geom_point() +
   geom_smooth(method = "lm") +
-  labs(x = "AT", y = "NOX")
+  labs(x = "AT", y = "NOX") +
+  stat_regline_equation(aes(label = ..rr.label..), label.y = 105)
 
 ggplot(low_energy, aes(AP, NOX)) +
   geom_point() +
   geom_smooth(method = "lm") +
-  labs(x = "AP", y = "NOX")
+  labs(x = "AP", y = "NOX") +
+  stat_regline_equation(aes(label = ..rr.label..), label.y = 105)
 
 ggplot(low_energy, aes(AH, NOX)) +
   geom_point() +
   geom_smooth(method = "lm") +
-  labs(x = "AH", y = "NOX")
+  labs(x = "AH", y = "NOX") +
+  stat_regline_equation(aes(label = ..rr.label..), label.y = 105)
 ```
 
 Note that the `echo = FALSE` parameter was added to the code chunk to prevent printing of the R code that generated the plot.
